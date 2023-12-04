@@ -1,5 +1,6 @@
 import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { renderHillChart } from './src/renderer';
+import { parseCodeBlock } from 'src/parser';
 
 interface HillChartSettings {
 	mySetting: string;
@@ -16,14 +17,8 @@ export default class HillCharts extends Plugin {
 		await this.loadSettings();
 		this.addSettingTab(new SampleSettingTab(this.app, this));
 
-
-		const data = [
-			{ percentage: 40, color: "red" },
-			{ percentage: 20, color: "cyan" },
-			{ percentage: 55, color: "green" },
-		]
 		this.registerMarkdownCodeBlockProcessor("hillchart", (source, el, ctx) => {
-			renderHillChart(el, data);
+			renderHillChart(el, parseCodeBlock(source));
 		});
 	}
 

@@ -1,0 +1,5 @@
+points:
+  - percentage: 50
+    color: red
+  - percentage: 20
+    color: blue
