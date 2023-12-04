@@ -3,6 +3,7 @@ import { create, scaleLinear, axisBottom, range, line } from 'd3';
 type ChartPoint = {
   percentage: number;
   color: string;
+  text: string;
 }
 
 function renderHillChart(el: HTMLElement, data: Array<ChartPoint>) {
@@ -24,7 +25,7 @@ function renderHillChart(el: HTMLElement, data: Array<ChartPoint>) {
   renderMiddleLine(container, xScale, yScale);
   renderFooterText(container, xScale, chartHeight);
 
-  data.forEach(point => renderPoint(container, xScale, yScale, point.percentage, point.color));
+  data?.forEach(point => renderPoint(container, xScale, yScale, point));
 }
 
 function hillFn(point: number) {
@@ -71,13 +72,19 @@ function renderMiddleLine(container: Selection, xScale: any, yScale: any) {
     .style('stroke-dasharray', "5,5");
 }
 
-function renderPoint(container: Selection, xScale: any, yScale: any, percentage: number, color: string) {
+function renderPoint(container: Selection, xScale: any, yScale: any, point: ChartPoint) {
   container.append("circle")
-    .attr("cx", xScale(percentage))
-    .attr("cy", yScale(hillFn(percentage)))
+    .attr("cx", xScale(point.percentage))
+    .attr("cy", yScale(hillFn(point.percentage)))
     .attr("r", 10)
-    .style("fill", color)
+    .style("fill", point.color)
     .style("opacity", "0.7");
+
+  container.append("text")
+    .text(point.text)
+    .attr("x", xScale(point.percentage))
+    .attr("y", yScale(hillFn(point.percentage) - 10))
+    .style("fill", "lightgrey")
 }
 
 function renderFooterText(container: Selection, xScale: any, chartHeight: number) {
