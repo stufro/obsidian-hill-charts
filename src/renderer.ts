@@ -1,18 +1,17 @@
 import { create, scaleLinear, axisBottom, range, line } from 'd3';
 
-const DATA = [
-  { percentage: 40, color: "red" },
-  { percentage: 20, color: "cyan" },
-  { percentage: 55, color: "green" },
-]
+type ChartPoint = {
+  percentage: number;
+  color: string;
+}
 
-function renderHillChart(el: HTMLElement) {
+function renderHillChart(el: HTMLElement, data: Array<ChartPoint>) {
   const chartHeight = 250;
   const chartWidth = 700;
   const container = create("svg");
   container
     .attr("width", "700")
-    .attr("height", "300")
+    .attr("height", "290")
     .attr("id", "hillChart");
   el.parentElement?.replaceChild(container.node(), el);
 
@@ -25,7 +24,7 @@ function renderHillChart(el: HTMLElement) {
   renderMiddleLine(container, xScale, yScale);
   renderFooterText(container, xScale, chartHeight);
 
-  DATA.forEach(point => renderPoint(container, xScale, yScale, point.percentage, point.color));
+  data.forEach(point => renderPoint(container, xScale, yScale, point.percentage, point.color));
 }
 
 function hillFn(point: number) {
