@@ -3,10 +3,10 @@ import { create, scaleLinear, axisBottom, range, line } from 'd3';
 type ChartPoint = {
   percentage: number;
   color: string;
-  text: string;
+  text?: string;
 }
 
-function renderHillChart(el: HTMLElement, data: Array<ChartPoint>) {
+function renderHillChart(data: Array<ChartPoint>) {
   const chartHeight = 250;
   const chartWidth = 700;
   const container = create("svg");
@@ -14,7 +14,6 @@ function renderHillChart(el: HTMLElement, data: Array<ChartPoint>) {
     .attr("width", "700")
     .attr("height", "290")
     .attr("id", "hillChart");
-  el.parentElement?.replaceChild(container.node(), el);
 
   const marginTop = 5;
   const xScale = scaleLinear().domain([0, 100]).range([0, chartWidth]);
@@ -24,15 +23,18 @@ function renderHillChart(el: HTMLElement, data: Array<ChartPoint>) {
   renderCurve(container, xScale, yScale);
   renderMiddleLine(container, xScale, yScale);
   renderFooterText(container, xScale, chartHeight);
+  data?.forEach(point => {
+    renderPoint(container, xScale, yScale, point);
+  })
 
-  data?.forEach(point => renderPoint(container, xScale, yScale, point));
+  return container;
 }
 
 function hillFn(point: number) {
   return 50 * Math.sin((Math.PI / 50) * point - (1 / 2) * Math.PI) + 50;
 }
 
-function renderBaseLine(container: Selection, xScale: any, chartHeight: number, marginTop: number) {
+function renderBaseLine(container: any, xScale: any, chartHeight: number, marginTop: number) {
   const bottomLine = axisBottom(xScale).ticks(0).tickSize(0);
   container
     .append('g')
@@ -41,15 +43,15 @@ function renderBaseLine(container: Selection, xScale: any, chartHeight: number, 
     .call(bottomLine);
 }
 
-function renderCurve(container: Selection, xScale: any, yScale: any) {
+function renderCurve(container: any, xScale: any, yScale: any) {
   const mainLineCurvePoints = range(0, 100, 0.1).map((i) => ({
     x: i,
-    y: 50 * Math.sin((Math.PI / 50) * i - (1 / 2) * Math.PI) + 50,
+    y: hillFn(i),
   }));
 
   const curve = line()
-    .x((d) => xScale(d.x))
-    .y((d) => yScale(d.y));
+    .x((d: any) => xScale(d.x))
+    .y((d: any) => yScale(d.y));
 
   container
     .append('path')
@@ -60,7 +62,7 @@ function renderCurve(container: Selection, xScale: any, yScale: any) {
     .style('stroke', "white");
 }
 
-function renderMiddleLine(container: Selection, xScale: any, yScale: any) {
+function renderMiddleLine(container: any, xScale: any, yScale: any) {
   container
     .append('line')
     .attr('class', 'hill-chart-middle-line')
@@ -72,7 +74,7 @@ function renderMiddleLine(container: Selection, xScale: any, yScale: any) {
     .style('stroke-dasharray', "5,5");
 }
 
-function renderPoint(container: Selection, xScale: any, yScale: any, point: ChartPoint) {
+function renderPoint(container: any, xScale: any, yScale: any, point: ChartPoint) {
   container.append("circle")
     .attr("cx", xScale(point.percentage))
     .attr("cy", yScale(hillFn(point.percentage)))
@@ -82,12 +84,18 @@ function renderPoint(container: Selection, xScale: any, yScale: any, point: Char
 
   container.append("text")
     .text(point.text)
-    .attr("x", xScale(point.percentage))
-    .attr("y", yScale(hillFn(point.percentage) - 10))
+    .attr("x", adjustedXPosition(xScale(point.percentage), point.percentage))
+    .attr("y", yScale(hillFn(point.percentage)) + 5)
     .style("fill", "lightgrey")
 }
 
-function renderFooterText(container: Selection, xScale: any, chartHeight: number) {
+function adjustedXPosition(coordinate: number, position: number) {
+  const margin = 15;
+  const adjustment = (position > 80) ? -2.75 * margin : margin;
+  return coordinate + adjustment
+}
+
+function renderFooterText(container: any, xScale: any, chartHeight: number) {
   container
     .append('text')
     .attr('class', 'hill-chart-text')
@@ -106,4 +114,4 @@ function renderFooterText(container: Selection, xScale: any, chartHeight: number
     .attr('y', chartHeight + 30);
 }
 
-export { renderHillChart };
+export { renderHillChart, adjustedXPosition };

@@ -18,7 +18,8 @@ export default class HillCharts extends Plugin {
 		this.addSettingTab(new SampleSettingTab(this.app, this));
 
 		this.registerMarkdownCodeBlockProcessor("hillchart", (source, el, ctx) => {
-			renderHillChart(el, parseCodeBlock(source));
+			const container = renderHillChart(parseCodeBlock(source));
+			el.parentElement?.replaceChild(container.node(), el);
 		});
 	}
 
