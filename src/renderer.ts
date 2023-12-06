@@ -1,7 +1,7 @@
 import { create, scaleLinear, axisBottom, range, line } from 'd3';
 
 type ChartPoint = {
-  percentage: number;
+  position: number;
   color: string;
   text?: string;
 }
@@ -76,16 +76,16 @@ function renderMiddleLine(container: any, xScale: any, yScale: any) {
 
 function renderPoint(container: any, xScale: any, yScale: any, point: ChartPoint) {
   container.append("circle")
-    .attr("cx", xScale(point.percentage))
-    .attr("cy", yScale(hillFn(point.percentage)))
+    .attr("cx", xScale(point.position))
+    .attr("cy", yScale(hillFn(point.position)))
     .attr("r", 10)
     .style("fill", point.color)
     .style("opacity", "0.7");
 
   container.append("text")
     .text(point.text)
-    .attr("x", adjustedXPosition(xScale(point.percentage), point.percentage))
-    .attr("y", yScale(hillFn(point.percentage)) + 5)
+    .attr("x", adjustedXPosition(xScale(point.position), point.position))
+    .attr("y", yScale(hillFn(point.position)) + 5)
     .style("fill", "lightgrey")
 }
 
