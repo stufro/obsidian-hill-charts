@@ -125,4 +125,4 @@ function renderRightFooterText(xScale: any, chartHeight: number) {
     .node();
 }
 
-export { renderHillChart, adjustedXPosition };
+export { renderHillChart, adjustedXPosition, renderBaseLine };
