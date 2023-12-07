@@ -11,8 +11,8 @@ function renderHillChart(data: Array<ChartPoint>) {
   const chartWidth = 700;
   const container = create("svg");
   container
-    .attr("width", "700")
-    .attr("height", "290")
+    .attr("width", chartWidth)
+    .attr("height", `${chartHeight + 40}`)
     .attr("id", "hillChart");
 
   const marginTop = 5;
