@@ -1,5 +1,4 @@
 import { parseCodeBlock } from "../src/parser"
-import { readFile } from 'fs/promises';
 
 describe('parseCodeBlock', () => {
   test('parses the code block into an object', async () => {
