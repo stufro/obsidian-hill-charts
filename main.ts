@@ -1,13 +1,15 @@
-import { App, Editor, MarkdownView, Modal, Notice, Plugin, PluginSettingTab, Setting } from 'obsidian';
+import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { renderHillChart } from './src/renderer';
 import { parseCodeBlock } from 'src/parser';
 
 interface HillChartSettings {
-	mySetting: string;
+	chartHeight: number;
+	chartWidth: number;
 }
 
 const DEFAULT_SETTINGS: HillChartSettings = {
-	mySetting: 'default'
+	chartHeight: 250,
+	chartWidth: 700,
 }
 
 export default class HillCharts extends Plugin {
@@ -18,7 +20,7 @@ export default class HillCharts extends Plugin {
 		this.addSettingTab(new SampleSettingTab(this.app, this));
 
 		this.registerMarkdownCodeBlockProcessor("hillchart", (source, el, ctx) => {
-			const container = renderHillChart(parseCodeBlock(source));
+			const container = renderHillChart(parseCodeBlock(source), this.settings);
 			el.parentElement?.replaceChild(container.node(), el);
 		});
 	}
@@ -49,13 +51,22 @@ class SampleSettingTab extends PluginSettingTab {
 		containerEl.empty();
 
 		new Setting(containerEl)
-			.setName('Setting #1')
-			.setDesc('It\'s a secret')
+			.setName('Default Height')
+			.setDesc('Height in pixels')
 			.addText(text => text
-				.setPlaceholder('Enter your secret')
-				.setValue(this.plugin.settings.mySetting)
+				.setValue(`${this.plugin.settings.chartHeight || DEFAULT_SETTINGS.chartHeight}`)
 				.onChange(async (value) => {
-					this.plugin.settings.mySetting = value;
+					this.plugin.settings.chartHeight = parseInt(value);
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName('Default Width')
+			.setDesc('Width in pixels')
+			.addText(text => text
+				.setValue(`${this.plugin.settings.chartWidth || DEFAULT_SETTINGS.chartWidth}`)
+				.onChange(async (value) => {
+					this.plugin.settings.chartWidth = parseInt(value);
 					await this.plugin.saveSettings();
 				}));
 	}

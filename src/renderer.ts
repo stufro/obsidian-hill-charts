@@ -6,9 +6,14 @@ type ChartPoint = {
   text?: string;
 }
 
-function renderHillChart(data: Array<ChartPoint>) {
-  const chartHeight = 250;
-  const chartWidth = 700;
+interface HillChartSettings {
+  chartHeight: number;
+  chartWidth: number;
+}
+
+function renderHillChart(data: Array<ChartPoint>, settings: HillChartSettings) {
+  const chartHeight = settings.chartHeight;
+  const chartWidth = settings.chartWidth;
   const container = create("svg");
   container
     .attr("width", chartWidth)
