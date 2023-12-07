@@ -75,8 +75,8 @@ function renderMiddleLine(xScale: any, yScale: any) {
     .attr('class', 'hill-chart-middle-line')
     .attr('y1', yScale(0))
     .attr('y2', yScale(100))
-    .attr('x2', xScale(50))
     .attr('x1', xScale(50))
+    .attr('x2', xScale(50))
     .style('stroke', "lightgrey")
     .style('stroke-dasharray', "5,5")
     .node();
@@ -130,4 +130,4 @@ function renderRightFooterText(xScale: any, chartHeight: number) {
     .node();
 }
 
-export { renderHillChart, adjustedXPosition, renderBaseLine };
+export { renderHillChart, renderBaseLine, renderMiddleLine, renderPoint, renderPointLabel, adjustedXPosition };
