@@ -66,7 +66,7 @@ function renderCurve(xScale: any, yScale: any) {
     .datum(mainLineCurvePoints)
     .attr('d', curve)
     .style('fill', "transparent")
-    .style('stroke', "white")
+    .style('stroke', "var(--text-normal)")
     .node();
 }
 
@@ -77,8 +77,9 @@ function renderMiddleLine(xScale: any, yScale: any) {
     .attr('y2', yScale(100))
     .attr('x1', xScale(50))
     .attr('x2', xScale(50))
-    .style('stroke', "lightgrey")
+    .style('stroke', "var(--background-modifier-border)")
     .style('stroke-dasharray', "5,5")
+    .style('stroke-width', "2")
     .node();
 }
 
@@ -88,7 +89,7 @@ function renderPoint(xScale: any, yScale: any, point: ChartPoint) {
     .attr("cy", yScale(hillFn(point.position)))
     .attr("r", 10)
     .style("fill", point.color)
-    .style("opacity", "0.7")
+    .style("opacity", "0.8")
     .node();
 }
 
@@ -97,7 +98,7 @@ function renderPointLabel(xScale: any, yScale: any, point: ChartPoint) {
     .text(point.text || "")
     .attr("x", adjustedXPosition(xScale(point.position), point.position))
     .attr("y", yScale(hillFn(point.position)) + 5)
-    .style("fill", "lightgrey")
+    .style("fill", "var(--text-normal)")
     .node();
 }
 
@@ -111,8 +112,9 @@ function renderLeftFooterText(xScale: any, chartHeight: number) {
   return create('svg:text')
     .attr('class', 'hill-chart-text')
     .text('Figuring things out')
-    .style('font-size', "1rem")
-    .style('fill', "lightgrey")
+    .style('font-size', "var(--font-small)")
+    .style('font-weight', 'var(--font-light)')
+    .style('fill', 'var(--text-normal)')
     .attr('x', xScale(20))
     .attr('y', chartHeight + 30)
     .node();
@@ -123,8 +125,9 @@ function renderRightFooterText(xScale: any, chartHeight: number) {
     .append('text')
     .attr('class', 'hill-chart-text')
     .text('Making it happen')
-    .style('font-size', "1rem")
-    .style('fill', "lightgrey")
+    .style('font-size', "var(--font-small)")
+    .style('font-weight', 'var(--font-light)')
+    .style('fill', 'var(--text-normal)')
     .attr('x', xScale(60))
     .attr('y', chartHeight + 30)
     .node();
