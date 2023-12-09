@@ -5,11 +5,13 @@ import { parseCodeBlock } from 'src/parser';
 interface HillChartSettings {
 	chartHeight: number;
 	chartWidth: number;
+	pointSize: number;
 }
 
 const DEFAULT_SETTINGS: HillChartSettings = {
 	chartHeight: 250,
 	chartWidth: 700,
+	pointSize: 10,
 }
 
 export default class HillCharts extends Plugin {
@@ -67,6 +69,16 @@ class SampleSettingTab extends PluginSettingTab {
 				.setValue(`${this.plugin.settings.chartWidth || DEFAULT_SETTINGS.chartWidth}`)
 				.onChange(async (value) => {
 					this.plugin.settings.chartWidth = parseInt(value);
+					await this.plugin.saveSettings();
+				}));
+
+		new Setting(containerEl)
+			.setName('Point Size')
+			.setDesc('Radius in pixels')
+			.addText(text => text
+				.setValue(`${this.plugin.settings.pointSize || DEFAULT_SETTINGS.pointSize}`)
+				.onChange(async (value) => {
+					this.plugin.settings.pointSize = parseInt(value);
 					await this.plugin.saveSettings();
 				}));
 	}

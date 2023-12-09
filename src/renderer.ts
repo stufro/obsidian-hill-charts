@@ -9,6 +9,7 @@ type ChartPoint = {
 interface HillChartSettings {
   chartHeight: number;
   chartWidth: number;
+  pointSize: number;
 }
 
 function renderHillChart(data: Array<ChartPoint>, settings: HillChartSettings) {
@@ -30,8 +31,8 @@ function renderHillChart(data: Array<ChartPoint>, settings: HillChartSettings) {
   container.append(() => renderLeftFooterText(xScale, chartHeight));
   container.append(() => renderRightFooterText(xScale, chartHeight));
   data?.forEach(point => {
-    container.append(() => renderPoint(xScale, yScale, point));
-    container.append(() => renderPointLabel(xScale, yScale, point));
+    container.append(() => renderPoint(xScale, yScale, point, settings.pointSize));
+    container.append(() => renderPointLabel(xScale, yScale, point, settings.pointSize));
   })
 
   return container;
@@ -83,29 +84,34 @@ function renderMiddleLine(xScale: any, yScale: any) {
     .node();
 }
 
-function renderPoint(xScale: any, yScale: any, point: ChartPoint) {
+function renderPoint(xScale: any, yScale: any, point: ChartPoint, size: number) {
   return create("svg:circle")
     .attr("cx", xScale(point.position))
     .attr("cy", yScale(hillFn(point.position)))
-    .attr("r", 10)
+    .attr("r", size)
     .style("fill", point.color)
     .style("opacity", "0.8")
     .node();
 }
 
-function renderPointLabel(xScale: any, yScale: any, point: ChartPoint) {
+function renderPointLabel(xScale: any, yScale: any, point: ChartPoint, pointSize: number) {
   return create("svg:text")
     .text(point.text || "")
-    .attr("x", adjustedXPosition(xScale(point.position), point.position))
+    .attr("x", adjustedXPosition(xScale(point.position), point.position, pointSize))
     .attr("y", yScale(hillFn(point.position)) + 5)
+    .style("text-anchor", () => textOutOfBounds(point.position) ? 'end' : 'start')
     .style("fill", "var(--text-normal)")
     .node();
 }
 
-function adjustedXPosition(coordinate: number, position: number) {
-  const margin = 15;
-  const adjustment = (position > 80) ? -2.75 * margin : margin;
+function adjustedXPosition(coordinate: number, position: number, pointSize: number) {
+  const margin = pointSize + 5;
+  const adjustment = textOutOfBounds(position) ? -1 * margin : margin;
   return coordinate + adjustment
+}
+
+function textOutOfBounds(pointPosition: number) {
+  return pointPosition > 80
 }
 
 function renderLeftFooterText(xScale: any, chartHeight: number) {

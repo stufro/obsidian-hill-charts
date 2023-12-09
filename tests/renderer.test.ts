@@ -39,21 +39,22 @@ describe('renderPoint', () => {
   const xScale = scaleLinear().domain([0, 100]).range([0, chartWidth]);
   const yScale = scaleLinear().domain([0, 100]).range([chartHeight, 0]);
   const point = { position: 40, color: "blue" }
+  const size = 10;
 
   test('sets the x coordinate at [position] percentage along the x axis', () => {
-    expect(renderPoint(xScale, yScale, point)?.outerHTML).toContain('cx="40')
+    expect(renderPoint(xScale, yScale, point, size)?.outerHTML).toContain('cx="40')
   })
 
   test('calculates the y coordinate based on the position creating the sine wave shape', () => {
-    expect(renderPoint(xScale, yScale, point)?.outerHTML).toContain('cy="9.549150281252627"')
+    expect(renderPoint(xScale, yScale, point, size)?.outerHTML).toContain('cy="9.549150281252627"')
   })
 
   test('sets the radius', () => {
-    expect(renderPoint(xScale, yScale, point)?.outerHTML).toContain('r="10"')
+    expect(renderPoint(xScale, yScale, point, size)?.outerHTML).toContain('r="10"')
   })
 
   test('sets the opacity', () => {
-    expect(renderPoint(xScale, yScale, point)?.outerHTML).toContain('opacity: 0.7')
+    expect(renderPoint(xScale, yScale, point, size)?.outerHTML).toContain('opacity: 0.8')
   })
 });
 
@@ -63,26 +64,28 @@ describe('renderPointLabel', () => {
   const xScale = scaleLinear().domain([0, 100]).range([0, chartWidth]);
   const yScale = scaleLinear().domain([0, 100]).range([chartHeight, 0]);
   const point = { position: 40, color: "blue" }
+  const pointSize = 10;
 
   test('sets the x coordinate next to the point', () => {
-    expect(renderPointLabel(xScale, yScale, point)?.outerHTML).toContain('x="55"')
+    expect(renderPointLabel(xScale, yScale, point, pointSize)?.outerHTML).toContain('x="55"')
   })
 
   test('sets the y coordinate level with the point', () => {
-    expect(renderPointLabel(xScale, yScale, point)?.outerHTML).toContain('y="14.549150281252627"')
+    expect(renderPointLabel(xScale, yScale, point, pointSize)?.outerHTML).toContain('y="14.549150281252627"')
   })
 });
 
 describe('adjustedXPosition', () => {
+  const pointSize = 10;
+  const coordinate = 500;
+
   test('returns the coordinate + 15 when the position is <= 80', () => {
-    const coordinate = 500;
     const position = 80;
-    expect(adjustedXPosition(coordinate, position)).toEqual(515);
+    expect(adjustedXPosition(coordinate, position, pointSize)).toEqual(515);
   });
 
-  test('returns the coordinate - (15 * 2.75) when the position is > 80', () => {
-    const coordinate = 500;
+  test('returns the coordinate -15 when the position is > 80', () => {
     const position = 81;
-    expect(adjustedXPosition(coordinate, position)).toEqual(458.75);
+    expect(adjustedXPosition(coordinate, position, pointSize)).toEqual(485);
   });
 })
