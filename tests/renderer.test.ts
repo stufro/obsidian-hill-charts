@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ */
+
 import { adjustedXPosition, renderBaseLine, renderMiddleLine, renderPoint, renderPointLabel } from "../src/renderer";
 import { scaleLinear } from 'd3';
 
