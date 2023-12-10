@@ -37,4 +37,12 @@ describe('parseCodeBlock', () => {
       { position: 20, color: "blue", size: 10 },
     ])
   })
+
+  test('sets a default color', () => {
+    const yaml = `points:
+                    - position: 50
+                      text: Foo`
+
+    expect(parseCodeBlock(yaml, settings)[0].color || "").toContain("var(--color-")
+  })
 });
