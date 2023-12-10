@@ -13,7 +13,7 @@ export default class HillCharts extends Plugin {
 
 		this.registerMarkdownCodeBlockProcessor("hillchart", (source, el, ctx) => {
 			const container = renderHillChart(parseCodeBlock(source, this.settings), this.settings);
-			el.parentElement?.replaceChild(container.node(), el);
+			el.parentElement?.replaceChild(container || this.errorMessage(), el);
 		});
 	}
 
@@ -26,5 +26,11 @@ export default class HillCharts extends Plugin {
 
 	async saveSettings() {
 		await this.saveData(this.settings);
+	}
+
+	errorMessage(): Node {
+		const element = document.createElement("i")
+		element.textContent = "An error occured rendering this hill chart. Please inspect the console logs."
+		return element;
 	}
 }

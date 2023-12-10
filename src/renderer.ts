@@ -26,7 +26,7 @@ function renderHillChart(data: Array<ChartPoint>, settings: HillChartSettings) {
     container.append(() => renderPointLabel(xScale, yScale, point));
   })
 
-  return container;
+  return container.node();
 }
 
 function hillFn(point: number) {
