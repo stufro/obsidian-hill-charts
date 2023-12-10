@@ -1,4 +1,8 @@
 # Obsidian Hill Charts
+<a href="https://www.buymeacoffee.com/stuartfrosg" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="20" width="85"></a>
+[![GitHub license](https://img.shields.io/github/license/stufro/obsidian-hill-charts?color=80475E)](https://github.com/stufro/obsidian-hill-charts/blob/main/LICENSE.txt)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/stufro/obsidian-hill-charts?color=4B88A2)
+
 An Obsidian plugin for adding hill charts to your notes.
 
 - Add hill charts in line using simple YAML data
