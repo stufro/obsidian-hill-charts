@@ -5,7 +5,7 @@
 
 An Obsidian plugin for adding hill charts to your notes.
 
-- Add hill charts in line using simple YAML data
+- Create hill charts inline by writing a tiny bit of YAML. 
 - Customizable styles and sizes
 - [What is a hill chart?](https://www.hillchart.co/blog/hill-chart-guide/)
 
