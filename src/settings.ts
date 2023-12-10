@@ -6,6 +6,7 @@ const DEFAULT_SETTINGS: HillChartSettings = {
   chartHeight: 250,
   chartWidth: 700,
   pointSize: 10,
+  pointOpacity: 0.8,
 }
 
 class SettingTab extends PluginSettingTab {
@@ -48,6 +49,16 @@ class SettingTab extends PluginSettingTab {
         .setValue(`${this.plugin.settings.pointSize || DEFAULT_SETTINGS.pointSize}`)
         .onChange(async (value) => {
           this.plugin.settings.pointSize = parseInt(value);
+          await this.plugin.saveSettings();
+        }));
+
+    new Setting(containerEl)
+      .setName('Point Opacity')
+      .setDesc('Value between 0 and 1')
+      .addText(text => text
+        .setValue(`${this.plugin.settings.pointOpacity || DEFAULT_SETTINGS.pointOpacity}`)
+        .onChange(async (value) => {
+          this.plugin.settings.pointOpacity = parseFloat(value);
           await this.plugin.saveSettings();
         }));
   }

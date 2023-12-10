@@ -43,7 +43,7 @@ describe('renderPoint', () => {
   const chartHeight = 100;
   const xScale = scaleLinear().domain([0, 100]).range([0, chartWidth]);
   const yScale = scaleLinear().domain([0, 100]).range([chartHeight, 0]);
-  const point: ChartPoint = { position: 40, color: "blue", size: 10 }
+  const point: ChartPoint = { position: 40, color: "blue", size: 10, opacity: 0.8 }
 
   test('sets the x coordinate at [position] percentage along the x axis', () => {
     expect(renderPoint(xScale, yScale, point)?.outerHTML).toContain('cx="40')

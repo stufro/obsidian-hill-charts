@@ -16,7 +16,7 @@ function parseCodeBlock(input: string, settings: HillChartSettings): Array<Chart
 
   return parse(input)["points"].map((point: ChartPoint) => {
     if (colors.length == 0) colors = [...DEFAULT_COLORS];
-    return { size: settings.pointSize, color: selectColor(colors), ...point }
+    return { size: settings.pointSize, opacity: settings.pointOpacity, color: selectColor(colors), ...point }
   })
 }
 

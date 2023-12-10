@@ -7,6 +7,7 @@ describe('parseCodeBlock', () => {
     chartHeight: 100,
     chartWidth: 200,
     pointSize: 10,
+    pointOpacity: 0.8
   }
 
   test('parses the code block into an object', async () => {
@@ -18,8 +19,8 @@ describe('parseCodeBlock', () => {
                       color: blue`
 
     expect(parseCodeBlock(yaml, settings)).toEqual([
-      { position: 50, color: "red", text: "Foo", size: 10 },
-      { position: 20, color: "blue", size: 10 },
+      { position: 50, color: "red", text: "Foo", size: 10, opacity: 0.8 },
+      { position: 20, color: "blue", size: 10, opacity: 0.8 },
     ])
   });
 
@@ -33,8 +34,8 @@ describe('parseCodeBlock', () => {
                       color: blue`
 
     expect(parseCodeBlock(yaml, settings)).toEqual([
-      { position: 50, color: "red", text: "Foo", size: 15 },
-      { position: 20, color: "blue", size: 10 },
+      { position: 50, color: "red", text: "Foo", size: 15, opacity: 0.8 },
+      { position: 20, color: "blue", size: 10, opacity: 0.8 },
     ])
   })
 

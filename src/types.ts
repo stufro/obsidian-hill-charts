@@ -2,6 +2,7 @@ interface HillChartSettings {
   chartHeight: number;
   chartWidth: number;
   pointSize: number;
+  pointOpacity: number;
 }
 
 type ChartPoint = {
@@ -9,6 +10,7 @@ type ChartPoint = {
   color?: string;
   text?: string;
   size?: number;
+  opacity?: number;
 }
 
 export type { HillChartSettings, ChartPoint };
