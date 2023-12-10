@@ -6,7 +6,7 @@ interface HillChartSettings {
 
 type ChartPoint = {
   position: number;
-  color: string;
+  color?: string;
   text?: string;
 }
 

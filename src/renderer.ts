@@ -78,7 +78,7 @@ function renderPoint(xScale: any, yScale: any, point: ChartPoint, size: number) 
     .attr("cx", xScale(point.position))
     .attr("cy", yScale(hillFn(point.position)))
     .attr("r", size)
-    .style("fill", point.color)
+    .style("fill", `${point.color}`)
     .style("opacity", "0.8")
     .node();
 }
