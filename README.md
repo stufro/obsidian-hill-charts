@@ -5,8 +5,10 @@ An Obsidian plugin for adding hill charts to your notes.
 - Customizable styles and sizes
 - [What is a hill chart?](https://www.hillchart.co/blog/hill-chart-guide/)
 
+![](obsidian-hill-charts.png)
+
 ## Installation
-Coming soon...
+You can install this plugin using the [Obsidian BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin.
 
 ## Usage
 Once installed, you can define a hillchart in a code block like this:
@@ -15,34 +17,40 @@ Once installed, you can define a hillchart in a code block like this:
 ```hillchart
 points:
   - position: 30
-    color: red
-    text: My Project
+    text: Admin Dashboard
   - position: 85
-    color: green
-    text: Other Project
+    text: User Auth
+  - position: 65
+    text: Subscriptions
  ```
 ```
 
+There are 5 available options you can pass to each point:
+```
+- position: 30
+  text: Admin Dashboard
+  color: "#fb3590"
+  size: 15
+  opacity: 0.5
+```
 
-<!-- ## Releasing new releases
+The default size and opacity can be configured in the plugin settings.
 
-- Update your `manifest.json` with your new version number, such as `1.0.1`, and the minimum Obsidian version required for your latest release.
-- Update your `versions.json` file with `"new-plugin-version": "minimum-obsidian-version"` so older versions of Obsidian can download an older version of your plugin that's compatible.
-- Create new GitHub release using your new version number as the "Tag version". Use the exact version number, don't include a prefix `v`. See here for an example: https://github.com/obsidianmd/obsidian-sample-plugin/releases
-- Upload the files `manifest.json`, `main.js`, `styles.css` as binary attachments. Note: The manifest.json file must be in two places, first the root path of your repository and also in the release.
-- Publish the release.
+## Contributing
+You can follow the [Obsidian instructions](https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin) for setting up a plugin in a development vault, swapping the git clone command for this repo instead of the sample plugin.
 
-> You can simplify the version bump process by running `npm version patch`, `npm version minor` or `npm version major` after updating `minAppVersion` manually in `manifest.json`.
-> The command will bump version in `manifest.json` and `package.json`, and add the entry for the new version to `versions.json`
+If you want to fix a bug or add a new feature, please:
 
-## Adding your plugin to the community plugin list
+1. [Fork the project](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/about-forks).
+2. Create a feature branch (`git checkout -b my-new-feature`).
+3. Make your changes. Include tests for your changes, otherwise I may accidentally break them in the future.
+4. Run the tests with the `npm exec jest` command. Make sure that they are still passing.
+5. Write [descriptive commit messages](https://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html).
+6. Push the branch to GitHub (`git push origin my-new-feature`).
+7. [Create a Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) and submit it to be merged with the main branch.
 
-- Check https://github.com/obsidianmd/obsidian-releases/blob/master/plugin-review.md
-- Publish an initial version.
-- Make sure you have a `README.md` file in the root of your repo.
-- Make a pull request at https://github.com/obsidianmd/obsidian-releases to add your plugin.
-
-## Manually installing the plugin
-
-- Copy over `main.js`, `styles.css`, `manifest.json` to your vault `VaultFolder/.obsidian/plugins/your-plugin-id/`.
- -->
+### Releasing
+```
+npm version [patch|minor|major]
+git push origin master --tags
+```

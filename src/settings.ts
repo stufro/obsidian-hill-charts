@@ -24,7 +24,7 @@ class SettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName('Default Height')
-      .setDesc('Height in pixels')
+      .setDesc('Chart height in pixels')
       .addText(text => text
         .setValue(`${this.plugin.settings.chartHeight || DEFAULT_SETTINGS.chartHeight}`)
         .onChange(async (value) => {
@@ -34,7 +34,7 @@ class SettingTab extends PluginSettingTab {
 
     new Setting(containerEl)
       .setName('Default Width')
-      .setDesc('Width in pixels')
+      .setDesc('Chart width in pixels')
       .addText(text => text
         .setValue(`${this.plugin.settings.chartWidth || DEFAULT_SETTINGS.chartWidth}`)
         .onChange(async (value) => {
