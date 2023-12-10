@@ -1,12 +1,7 @@
 import { App, Plugin, PluginSettingTab, Setting } from 'obsidian';
 import { renderHillChart } from './src/renderer';
-import { parseCodeBlock } from 'src/parser';
-
-interface HillChartSettings {
-	chartHeight: number;
-	chartWidth: number;
-	pointSize: number;
-}
+import { parseCodeBlock } from './src/parser';
+import { HillChartSettings } from './src/types'
 
 const DEFAULT_SETTINGS: HillChartSettings = {
 	chartHeight: 250,
@@ -22,7 +17,7 @@ export default class HillCharts extends Plugin {
 		this.addSettingTab(new SampleSettingTab(this.app, this));
 
 		this.registerMarkdownCodeBlockProcessor("hillchart", (source, el, ctx) => {
-			const container = renderHillChart(parseCodeBlock(source), this.settings);
+			const container = renderHillChart(parseCodeBlock(source, this.settings), this.settings);
 			el.parentElement?.replaceChild(container.node(), el);
 		});
 	}

@@ -1,16 +1,5 @@
 import { create, scaleLinear, axisBottom, range, line } from 'd3';
-
-type ChartPoint = {
-  position: number;
-  color: string;
-  text?: string;
-}
-
-interface HillChartSettings {
-  chartHeight: number;
-  chartWidth: number;
-  pointSize: number;
-}
+import { HillChartSettings, ChartPoint } from './types';
 
 function renderHillChart(data: Array<ChartPoint>, settings: HillChartSettings) {
   const chartHeight = settings.chartHeight;
