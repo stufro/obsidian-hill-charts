@@ -2,6 +2,7 @@
  * @jest-environment jsdom
  */
 
+import { ChartPoint } from "src/types";
 import { adjustedXPosition, renderBaseLine, renderMiddleLine, renderPoint, renderPointLabel } from "../src/renderer";
 import { scaleLinear } from 'd3';
 
@@ -42,23 +43,22 @@ describe('renderPoint', () => {
   const chartHeight = 100;
   const xScale = scaleLinear().domain([0, 100]).range([0, chartWidth]);
   const yScale = scaleLinear().domain([0, 100]).range([chartHeight, 0]);
-  const point = { position: 40, color: "blue" }
-  const size = 10;
+  const point: ChartPoint = { position: 40, color: "blue", size: 10 }
 
   test('sets the x coordinate at [position] percentage along the x axis', () => {
-    expect(renderPoint(xScale, yScale, point, size)?.outerHTML).toContain('cx="40')
+    expect(renderPoint(xScale, yScale, point)?.outerHTML).toContain('cx="40')
   })
 
   test('calculates the y coordinate based on the position creating the sine wave shape', () => {
-    expect(renderPoint(xScale, yScale, point, size)?.outerHTML).toContain('cy="9.549150281252627"')
+    expect(renderPoint(xScale, yScale, point)?.outerHTML).toContain('cy="9.549150281252627"')
   })
 
   test('sets the radius', () => {
-    expect(renderPoint(xScale, yScale, point, size)?.outerHTML).toContain('r="10"')
+    expect(renderPoint(xScale, yScale, point)?.outerHTML).toContain('r="10"')
   })
 
   test('sets the opacity', () => {
-    expect(renderPoint(xScale, yScale, point, size)?.outerHTML).toContain('opacity: 0.8')
+    expect(renderPoint(xScale, yScale, point)?.outerHTML).toContain('opacity: 0.8')
   })
 });
 
@@ -67,15 +67,14 @@ describe('renderPointLabel', () => {
   const chartHeight = 100;
   const xScale = scaleLinear().domain([0, 100]).range([0, chartWidth]);
   const yScale = scaleLinear().domain([0, 100]).range([chartHeight, 0]);
-  const point = { position: 40, color: "blue" }
-  const pointSize = 10;
+  const point: ChartPoint = { position: 40, color: "blue", size: 10 }
 
   test('sets the x coordinate next to the point', () => {
-    expect(renderPointLabel(xScale, yScale, point, pointSize)?.outerHTML).toContain('x="55"')
+    expect(renderPointLabel(xScale, yScale, point)?.outerHTML).toContain('x="55"')
   })
 
   test('sets the y coordinate level with the point', () => {
-    expect(renderPointLabel(xScale, yScale, point, pointSize)?.outerHTML).toContain('y="14.549150281252627"')
+    expect(renderPointLabel(xScale, yScale, point)?.outerHTML).toContain('y="14.549150281252627"')
   })
 });
 

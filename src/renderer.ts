@@ -1,6 +1,8 @@
 import { create, scaleLinear, axisBottom, range, line } from 'd3';
 import { HillChartSettings, ChartPoint } from './types';
 
+const DEFAULT_POINT_SIZE = 10;
+
 function renderHillChart(data: Array<ChartPoint>, settings: HillChartSettings) {
   const chartHeight = settings.chartHeight;
   const chartWidth = settings.chartWidth;
@@ -20,8 +22,8 @@ function renderHillChart(data: Array<ChartPoint>, settings: HillChartSettings) {
   container.append(() => renderLeftFooterText(xScale, chartHeight));
   container.append(() => renderRightFooterText(xScale, chartHeight));
   data?.forEach(point => {
-    container.append(() => renderPoint(xScale, yScale, point, settings.pointSize));
-    container.append(() => renderPointLabel(xScale, yScale, point, settings.pointSize));
+    container.append(() => renderPoint(xScale, yScale, point));
+    container.append(() => renderPointLabel(xScale, yScale, point));
   })
 
   return container;
@@ -73,20 +75,20 @@ function renderMiddleLine(xScale: any, yScale: any) {
     .node();
 }
 
-function renderPoint(xScale: any, yScale: any, point: ChartPoint, size: number) {
+function renderPoint(xScale: any, yScale: any, point: ChartPoint) {
   return create("svg:circle")
     .attr("cx", xScale(point.position))
     .attr("cy", yScale(hillFn(point.position)))
-    .attr("r", size)
+    .attr("r", `${point.size}`)
     .style("fill", `${point.color}`)
     .style("opacity", "0.8")
     .node();
 }
 
-function renderPointLabel(xScale: any, yScale: any, point: ChartPoint, pointSize: number) {
+function renderPointLabel(xScale: any, yScale: any, point: ChartPoint) {
   return create("svg:text")
     .text(point.text || "")
-    .attr("x", adjustedXPosition(xScale(point.position), point.position, pointSize))
+    .attr("x", adjustedXPosition(xScale(point.position), point.position, point.size || DEFAULT_POINT_SIZE))
     .attr("y", yScale(hillFn(point.position)) + 5)
     .style("text-anchor", () => textOutOfBounds(point.position) ? 'end' : 'start')
     .style("fill", "var(--text-normal)")
