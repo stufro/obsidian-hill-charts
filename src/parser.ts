@@ -1,5 +1,5 @@
 import { parse } from 'yaml'
-import { HillChartSettings, ChartPoint } from './types'
+import { HillChartSettings, ChartPoint, SerializedInput } from './types'
 
 const DEFAULT_COLORS = [
   "var(--color-red)",
@@ -11,13 +11,23 @@ const DEFAULT_COLORS = [
   "var(--color-pink)",
 ]
 
-function parseCodeBlock(input: string, settings: HillChartSettings): Array<ChartPoint> {
+function parseCodeBlock(input: string, settings: HillChartSettings): SerializedInput {
   let colors = [...DEFAULT_COLORS];
 
-  return parse(input)["points"].map((point: ChartPoint) => {
-    if (colors.length == 0) colors = [...DEFAULT_COLORS];
-    return { size: settings.pointSize, opacity: settings.pointOpacity, color: selectColor(colors), ...point }
-  })
+  try {
+    return ({
+      ok: true,
+      points: parse(input).points.map((point: ChartPoint) => {
+        if (colors.length == 0) colors = [...DEFAULT_COLORS];
+        return { size: settings.pointSize, opacity: settings.pointOpacity, color: selectColor(colors), ...point }
+      })
+    })
+  } catch (error) {
+    return ({
+      ok: false,
+      error: `Parsing Error: ${error.message}`
+    })
+  }
 }
 
 function selectColor(colors: Array<string>) {

@@ -13,4 +13,10 @@ type ChartPoint = {
   opacity?: number;
 }
 
-export type { HillChartSettings, ChartPoint };
+type SerializedInput = {
+  ok: boolean,
+  points?: Array<ChartPoint>,
+  error?: string,
+}
+
+export type { HillChartSettings, ChartPoint, SerializedInput };

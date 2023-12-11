@@ -1,8 +1,10 @@
-import { Plugin } from 'obsidian';
+import { Plugin, Notice } from 'obsidian';
 import { renderHillChart } from './src/renderer';
 import { parseCodeBlock } from './src/parser';
 import { HillChartSettings } from './src/types'
 import { SettingTab, DEFAULT_SETTINGS } from 'src/settings';
+
+const DEFAULT_ERROR = "An error occured rendering this hill chart. Please inspect the console logs."
 
 export default class HillCharts extends Plugin {
 	settings: HillChartSettings;
@@ -12,8 +14,15 @@ export default class HillCharts extends Plugin {
 		this.addSettingTab(new SettingTab(this.app, this));
 
 		this.registerMarkdownCodeBlockProcessor("hillchart", (source, el, ctx) => {
-			const container = renderHillChart(parseCodeBlock(source, this.settings), this.settings);
-			el.parentElement?.replaceChild(container || this.errorMessage(), el);
+			const parsedInput = parseCodeBlock(source, this.settings)
+
+			if (parsedInput.ok) {
+				const container = renderHillChart(parsedInput.points || [], this.settings);
+				el.parentElement?.replaceChild(container || this.errorMessage(), el);
+			} else {
+				new Notice(parsedInput.error || DEFAULT_ERROR)
+				el.parentElement?.replaceChild(this.errorMessage(parsedInput.error), el);
+			}
 		});
 	}
 
@@ -28,9 +37,9 @@ export default class HillCharts extends Plugin {
 		await this.saveData(this.settings);
 	}
 
-	errorMessage(): Node {
+	errorMessage(error = ""): Node {
 		const element = document.createElement("i")
-		element.textContent = "An error occured rendering this hill chart. Please inspect the console logs."
+		element.textContent = `${DEFAULT_ERROR} ${error}`;
 		return element;
 	}
 }
