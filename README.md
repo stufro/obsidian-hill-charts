@@ -5,7 +5,7 @@
 
 An Obsidian plugin for adding hill charts to your notes.
 
-- Create hill charts inline by writing a tiny bit of YAML. 
+- Create hill charts inline by writing a tiny bit of YAML.
 - Customizable styles and sizes
 - [What is a hill chart?](https://www.hillchart.co/blog/hill-chart-guide/)
 
@@ -58,3 +58,6 @@ If you want to fix a bug or add a new feature, please:
 npm version [patch|minor|major]
 git push origin master --tags
 ```
+
+## Credits
+- https://github.com/nagi1/hill-chart
