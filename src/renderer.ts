@@ -1,5 +1,5 @@
-import { create, scaleLinear, axisBottom, range, line } from 'd3';
-import { HillChartSettings, ChartPoint } from './types';
+import { create, scaleLinear, axisBottom, range, line, ScaleLinear } from 'd3';
+import { HillChartSettings, ChartPoint, ChartCoordinates } from './types';
 
 const DEFAULT_POINT_SIZE = 10;
 
@@ -33,7 +33,7 @@ function hillFn(point: number) {
   return 50 * Math.sin((Math.PI / 50) * point - (1 / 2) * Math.PI) + 50;
 }
 
-function renderBaseLine(xScale: any, chartHeight: number, marginTop: number) {
+function renderBaseLine(xScale: ScaleLinear<number, number, never>, chartHeight: number, marginTop: number) {
   const bottomLine = axisBottom(xScale).ticks(0).tickSize(0);
 
   return create<SVGGElement>('svg:g')
@@ -43,15 +43,15 @@ function renderBaseLine(xScale: any, chartHeight: number, marginTop: number) {
     .node();
 }
 
-function renderCurve(xScale: any, yScale: any) {
+function renderCurve(xScale: ScaleLinear<number, number, never>, yScale: ScaleLinear<number, number, never>) {
   const mainLineCurvePoints = range(0, 100, 0.1).map((i) => ({
     x: i,
     y: hillFn(i),
-  }));
+  } as ChartCoordinates));
 
-  const curve = line()
-    .x((d: any) => xScale(d.x))
-    .y((d: any) => yScale(d.y)) as any;
+  const curve = line<ChartCoordinates>()
+    .x((d: ChartCoordinates) => xScale(d.x))
+    .y((d: ChartCoordinates) => yScale(d.y));
 
   return create('svg:path')
     .attr('class', 'chart-hill-main-curve')
@@ -62,7 +62,7 @@ function renderCurve(xScale: any, yScale: any) {
     .node();
 }
 
-function renderMiddleLine(xScale: any, yScale: any) {
+function renderMiddleLine(xScale: ScaleLinear<number, number, never>, yScale: ScaleLinear<number, number, never>) {
   return create('svg:line')
     .attr('class', 'hill-chart-middle-line')
     .attr('y1', yScale(0))
@@ -75,7 +75,7 @@ function renderMiddleLine(xScale: any, yScale: any) {
     .node();
 }
 
-function renderPoint(xScale: any, yScale: any, point: ChartPoint) {
+function renderPoint(xScale: ScaleLinear<number, number, never>, yScale: ScaleLinear<number, number, never>, point: ChartPoint) {
   return create("svg:circle")
     .attr("cx", xScale(point.position))
     .attr("cy", yScale(hillFn(point.position)))
@@ -85,7 +85,7 @@ function renderPoint(xScale: any, yScale: any, point: ChartPoint) {
     .node();
 }
 
-function renderPointLabel(xScale: any, yScale: any, point: ChartPoint) {
+function renderPointLabel(xScale: ScaleLinear<number, number, never>, yScale: ScaleLinear<number, number, never>, point: ChartPoint) {
   return create("svg:text")
     .text(point.text || "")
     .attr("x", adjustedXPosition(xScale(point.position), point.position, point.size || DEFAULT_POINT_SIZE))
@@ -105,7 +105,7 @@ function textOutOfBounds(pointPosition: number) {
   return pointPosition > 80
 }
 
-function renderLeftFooterText(xScale: any, chartHeight: number) {
+function renderLeftFooterText(xScale: ScaleLinear<number, number, never>, chartHeight: number) {
   return create('svg:text')
     .attr('class', 'hill-chart-text')
     .text('Figuring things out')
@@ -117,7 +117,7 @@ function renderLeftFooterText(xScale: any, chartHeight: number) {
     .node();
 }
 
-function renderRightFooterText(xScale: any, chartHeight: number) {
+function renderRightFooterText(xScale: ScaleLinear<number, number, never>, chartHeight: number) {
   return create('svg:text')
     .append('text')
     .attr('class', 'hill-chart-text')

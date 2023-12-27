@@ -19,4 +19,9 @@ type SerializedInput = {
   error?: string,
 }
 
-export type { HillChartSettings, ChartPoint, SerializedInput };
+type ChartCoordinates = {
+  x: number,
+  y: number
+}
+
+export type { HillChartSettings, ChartPoint, ChartCoordinates, SerializedInput };
