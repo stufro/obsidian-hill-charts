@@ -23,7 +23,7 @@ class SettingTab extends PluginSettingTab {
     containerEl.empty();
 
     new Setting(containerEl)
-      .setName('Default Height')
+      .setName('Default height')
       .setDesc('Chart height in pixels')
       .addText(text => text
         .setValue(`${this.plugin.settings.chartHeight || DEFAULT_SETTINGS.chartHeight}`)
@@ -33,7 +33,7 @@ class SettingTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName('Default Width')
+      .setName('Default width')
       .setDesc('Chart width in pixels')
       .addText(text => text
         .setValue(`${this.plugin.settings.chartWidth || DEFAULT_SETTINGS.chartWidth}`)
@@ -43,7 +43,7 @@ class SettingTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName('Point Size')
+      .setName('Point size')
       .setDesc('Radius in pixels')
       .addText(text => text
         .setValue(`${this.plugin.settings.pointSize || DEFAULT_SETTINGS.pointSize}`)
@@ -53,7 +53,7 @@ class SettingTab extends PluginSettingTab {
         }));
 
     new Setting(containerEl)
-      .setName('Point Opacity')
+      .setName('Point opacity')
       .setDesc('Value between 0 and 1')
       .addText(text => text
         .setValue(`${this.plugin.settings.pointOpacity || DEFAULT_SETTINGS.pointOpacity}`)
