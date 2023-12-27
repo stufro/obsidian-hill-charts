@@ -1,5 +1,6 @@
 import { parseCodeBlock } from "../src/parser"
 import { HillChartSettings } from "../src/types";
+import { parse } from "yaml"
 
 
 describe('parseCodeBlock', () => {
@@ -18,7 +19,7 @@ describe('parseCodeBlock', () => {
                     - position: 20
                       color: blue`
 
-    expect(parseCodeBlock(yaml, settings).points).toEqual([
+    expect(parseCodeBlock(yaml, settings, parse).points).toEqual([
       { position: 50, color: "red", text: "Foo", size: 10, opacity: 0.8 },
       { position: 20, color: "blue", size: 10, opacity: 0.8 },
     ])
@@ -33,7 +34,7 @@ describe('parseCodeBlock', () => {
                     - position: 20
                       color: blue`
 
-    expect(parseCodeBlock(yaml, settings).points).toEqual([
+    expect(parseCodeBlock(yaml, settings, parse).points).toEqual([
       { position: 50, color: "red", text: "Foo", size: 15, opacity: 0.8 },
       { position: 20, color: "blue", size: 10, opacity: 0.8 },
     ])
@@ -44,7 +45,7 @@ describe('parseCodeBlock', () => {
                     - position: 50
                       text: Foo`
 
-    expect(parseCodeBlock(yaml, settings).points?.[0].color || "").toContain("var(--color-")
+    expect(parseCodeBlock(yaml, settings, parse).points?.[0].color || "").toContain("var(--color-")
   })
 
   test('returns an error object when given invalid yml', () => {
@@ -53,7 +54,7 @@ describe('parseCodeBlock', () => {
                       text: Foo
                   - wrong_indentation: 5`
 
-    expect(parseCodeBlock(yaml, settings).ok).toBe(false)
-    expect(parseCodeBlock(yaml, settings).error).toContain("Parsing Error: A block sequence may not be used as an implicit map key at line 4, column 1")
+    expect(parseCodeBlock(yaml, settings, parse).ok).toBe(false)
+    expect(parseCodeBlock(yaml, settings, parse).error).toContain("Parsing Error: A block sequence may not be used as an implicit map key at line 4, column 1")
   })
 });

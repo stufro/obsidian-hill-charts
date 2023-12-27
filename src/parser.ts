@@ -1,4 +1,3 @@
-import { parse } from 'yaml'
 import { HillChartSettings, ChartPoint, SerializedInput } from './types'
 
 const DEFAULT_COLORS = [
@@ -11,13 +10,13 @@ const DEFAULT_COLORS = [
   "var(--color-pink)",
 ]
 
-function parseCodeBlock(input: string, settings: HillChartSettings): SerializedInput {
+function parseCodeBlock(input: string, settings: HillChartSettings, parseFn: (input: string) => any): SerializedInput {
   let colors = [...DEFAULT_COLORS];
 
   try {
     return ({
       ok: true,
-      points: parse(input).points.map((point: ChartPoint) => {
+      points: parseFn(input).points.map((point: ChartPoint) => {
         if (colors.length == 0) colors = [...DEFAULT_COLORS];
         return { size: settings.pointSize, opacity: settings.pointOpacity, color: selectColor(colors), ...point }
       })

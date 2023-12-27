@@ -1,4 +1,4 @@
-import { Plugin, Notice } from 'obsidian';
+import { Plugin, Notice, parseYaml } from 'obsidian';
 import { renderHillChart } from './src/renderer';
 import { parseCodeBlock } from './src/parser';
 import { HillChartSettings } from './src/types'
@@ -14,7 +14,7 @@ export default class HillCharts extends Plugin {
 		this.addSettingTab(new SettingTab(this.app, this));
 
 		this.registerMarkdownCodeBlockProcessor("hillchart", (source, el, ctx) => {
-			const parsedInput = parseCodeBlock(source, this.settings)
+			const parsedInput = parseCodeBlock(source, this.settings, parseYaml)
 
 			if (parsedInput.ok) {
 				const container = renderHillChart(parsedInput.points || [], this.settings);
