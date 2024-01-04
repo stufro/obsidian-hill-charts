@@ -12,7 +12,7 @@ An Obsidian plugin for adding hill charts to your notes.
 ![](obsidian-hill-charts.png)
 
 ## Installation
-You can install this plugin using the [Obsidian BRAT](https://github.com/TfTHacker/obsidian42-brat) plugin.
+Please install via the regular Community Plugins setting tab within Obsidian.
 
 ## Usage
 Once installed, you can define a hillchart in a code block like this:
