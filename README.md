@@ -2,6 +2,7 @@
 <a href="https://www.buymeacoffee.com/stuartfrosg" target="_blank"><img src="https://cdn.buymeacoffee.com/buttons/default-orange.png" alt="Buy Me A Coffee" height="20" width="85"></a>
 [![GitHub license](https://img.shields.io/github/license/stufro/obsidian-hill-charts)](https://github.com/stufro/obsidian-hill-charts/blob/main/LICENSE.txt)
 ![GitHub release (latest by date)](https://img.shields.io/github/v/release/stufro/obsidian-hill-charts)
+![Obsidian Downloads](https://img.shields.io/badge/dynamic/json?logo=obsidian&color=%23483699&label=downloads&query=%24%5B%22hill-charts%22%5D.downloads&url=https%3A%2F%2Fraw.githubusercontent.com%2Fobsidianmd%2Fobsidian-releases%2Fmaster%2Fcommunity-plugin-stats.json)
 
 An Obsidian plugin for adding hill charts to your notes.
 
