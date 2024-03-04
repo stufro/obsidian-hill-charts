@@ -54,6 +54,16 @@ If you want to fix a bug or add a new feature, please:
 6. Push the branch to GitHub (`git push origin my-new-feature`).
 7. [Create a Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) and submit it to be merged with the main branch.
 
+### Building locally
+```
+npm run dev # this will watch for code changes and recompile
+```
+
+### Testing
+```
+npm exec jest
+```
+
 ### Releasing
 ```
 npm version [patch|minor|major]
