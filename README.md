@@ -39,7 +39,15 @@ There are 5 available options you can pass to each point:
   opacity: 0.5
 ```
 
-The default size and opacity can be configured in the plugin settings.
+And you can optionally set the width and height of a hillchart like this:
+```
+points:
+  - position: 10
+width: 600
+height: 150
+```
+
+The default width & height, plus the size and opacity of each point can be configured in the plugin settings.
 
 ## Contributing
 You can follow the [Obsidian instructions](https://docs.obsidian.md/Plugins/Getting+started/Build+a+plugin) for setting up a plugin in a development vault, swapping the git clone command for this repo instead of the sample plugin.
