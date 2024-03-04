@@ -1,11 +1,12 @@
 import { create, scaleLinear, axisBottom, range, line, ScaleLinear } from 'd3';
-import { HillChartSettings, ChartPoint, ChartCoordinates } from './types';
+import { ChartPoint, ChartCoordinates, SerializedInput } from './types';
+import { DEFAULT_SETTINGS } from './settings';
 
 const DEFAULT_POINT_SIZE = 10;
 
-function renderHillChart(data: Array<ChartPoint>, settings: HillChartSettings) {
-  const chartHeight = settings.chartHeight;
-  const chartWidth = settings.chartWidth;
+function renderHillChart(data: SerializedInput) {
+  const chartWidth = data.width || DEFAULT_SETTINGS.chartWidth;
+  const chartHeight = data.height || DEFAULT_SETTINGS.chartHeight;
   const container = create("svg");
   container
     .attr("width", chartWidth)
@@ -21,7 +22,7 @@ function renderHillChart(data: Array<ChartPoint>, settings: HillChartSettings) {
   container.append(() => renderMiddleLine(xScale, yScale));
   container.append(() => renderLeftFooterText(xScale, chartHeight));
   container.append(() => renderRightFooterText(xScale, chartHeight));
-  data?.forEach(point => {
+  data.points?.forEach(point => {
     container.append(() => renderPoint(xScale, yScale, point));
     container.append(() => renderPointLabel(xScale, yScale, point));
   })

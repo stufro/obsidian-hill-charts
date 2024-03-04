@@ -17,7 +17,7 @@ export default class HillCharts extends Plugin {
       const parsedInput = parseCodeBlock(source, this.settings, parseYaml)
 
       if (parsedInput.ok) {
-        const container = renderHillChart(parsedInput.points || [], this.settings);
+        const container = renderHillChart(parsedInput);
         el.parentElement?.replaceChild(container || this.errorMessage(), el);
       } else {
         new Notice(parsedInput.error || DEFAULT_ERROR)
