@@ -16,6 +16,8 @@ type ChartPoint = {
 type SerializedInput = {
   ok: boolean,
   points?: Array<ChartPoint>,
+  width?: number,
+  height?: number,
   error?: string,
 }
 

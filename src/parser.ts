@@ -14,12 +14,15 @@ function parseCodeBlock(input: string, settings: HillChartSettings, parseFn: (in
   let colors = [...DEFAULT_COLORS];
 
   try {
+    const parsedInput = parseFn(input);
     return ({
       ok: true,
-      points: parseFn(input).points.map((point: ChartPoint) => {
+      points: parsedInput.points.map((point: ChartPoint) => {
         if (colors.length == 0) colors = [...DEFAULT_COLORS];
         return { size: settings.pointSize, opacity: settings.pointOpacity, color: selectColor(colors), ...point }
-      })
+      }),
+      width: parsedInput.width || settings.chartWidth,
+      height: parsedInput.height || settings.chartHeight
     })
   } catch (error) {
     return ({
