@@ -1,7 +1,7 @@
 {
 	"id": "hill-charts",
 	"name": "Hill Charts",
-	"version": "0.1.2",
+	"version": "0.2.0",
 	"minAppVersion": "0.15.0",
 	"description": "Add Hill Charts to your notes.",
 	"author": "stufro",
