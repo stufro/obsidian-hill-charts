@@ -2,20 +2,19 @@
  * @jest-environment jsdom
  */
 
-import { ChartPoint, HillChartSettings } from "src/types";
+import { ChartPoint } from "src/types";
 import { adjustedXPosition, renderHillChart, renderBaseLine, renderMiddleLine, renderPoint, renderPointLabel } from "../src/renderer";
 import { scaleLinear } from 'd3';
 
 describe('renderHillChart', () => {
-  test('renders the width and height from the settings', () => {
+  test('renders the width and height from the SerializedInput', () => {
     const point: ChartPoint = { position: 40, color: "blue", size: 10, opacity: 0.8 }
-    const settings: HillChartSettings = {
-      chartHeight: 100,
-      chartWidth: 200,
-      pointSize: 10,
-      pointOpacity: 0.8
-    }
-    expect(renderHillChart([point], settings)?.outerHTML).toContain('width="200" height="140"')
+    expect(renderHillChart({ ok: true, points: [point], width: 200, height: 100 })?.outerHTML).toContain('width="200" height="140"')
+  })
+
+  test('renders the default width and height', () => {
+    const point: ChartPoint = { position: 40, color: "blue", size: 10, opacity: 0.8 }
+    expect(renderHillChart({ ok: true, points: [point] })?.outerHTML).toContain('width="700" height="290"')
   })
 })
 

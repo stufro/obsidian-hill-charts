@@ -1,12 +1,13 @@
 import { create, scaleLinear, axisBottom, range, line, ScaleLinear } from 'd3';
 import { ChartPoint, ChartCoordinates, SerializedInput } from './types';
-import { DEFAULT_SETTINGS } from './settings';
 
 const DEFAULT_POINT_SIZE = 10;
+const DEFAULT_HEIGHT = 250;
+const DEFAULT_WIDTH = 700;
 
 function renderHillChart(data: SerializedInput) {
-  const chartWidth = data.width || DEFAULT_SETTINGS.chartWidth;
-  const chartHeight = data.height || DEFAULT_SETTINGS.chartHeight;
+  const chartWidth = data.width || DEFAULT_WIDTH;
+  const chartHeight = data.height || DEFAULT_HEIGHT;
   const container = create("svg");
   container
     .attr("width", chartWidth)
